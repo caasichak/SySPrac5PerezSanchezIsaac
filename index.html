@@ -1,0 +1,371 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Pr&aacute;ctica 5: Series de Fourier en tiempo continuo</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-19"><meta name="DC.source" content="Practica5.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Pr&aacute;ctica 5: Series de Fourier en tiempo continuo</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Datos generales:</a></li><li><a href="#3">Objetivos</a></li><li><a href="#4">Introduccion : Series de Fourier en tiempo continuo</a></li><li><a href="#5">Desarrollo</a></li><li><a href="#6">Ejemplo 6.1</a></li><li><a href="#7">Ejemplo 6.2.</a></li><li><a href="#8">Ejemplo 6.4.</a></li><li><a href="#9">Ejercicio 6.5</a></li><li><a href="#11">Ejemplo 6.7</a></li><li><a href="#12">E. 6</a></li><li><a href="#13">E. 7</a></li><li><a href="#14">Referencias</a></li></ul></div><h2>Datos generales:<a name="1"></a></h2><p>Autores:</p><div><ul><li>Marmolejo Mart&iacute;nez Hamlet</li></ul></div><div><ul><li>Jorge Ortiz Velazco Jaime Jonathan</li></ul></div><div><ul><li>Perez Sanchez Isaac</li></ul></div><p>Grupo: 2TV2</p><p>Profesor: Dr. Rafael Martinez Martinez</p><h2>Objetivos<a name="3"></a></h2><pre>* Realizar gr&aacute;ficas de series de Fourier exponenciales y trigonom&eacute;tricas en tiempo continuo
+* Manipulaci&oacute;n de instrucciones en MATLAB
+* Calculo n&uacute;merico de los coeficientes de Fourier</pre><h2>Introduccion : Series de Fourier en tiempo continuo<a name="4"></a></h2><p>Como podemos saber, las series de Fourier es la suma de funciones armonicas de manera infinita, que llegaran a formar una funcion periodica o una funcione en cierto intervalo, el proposito de esta practica es mostrar las series de Fourier en tiempo continueo dada una exponencial compleja y observar como le comporta y adecua una serie de Fourier a una funcion $$f(t) dada. Por otro parte, tambien mostraremos el espectro de magnitud, espectro de fase y energia de error de cada serie.</p><h2>Desarrollo<a name="5"></a></h2><h2>Ejemplo 6.1<a name="6"></a></h2><p>Con serie y espectro trigonometrico, no es necesario entregar el c&oacute;digo, solo la aplicaci&oacute;n al problema especifico, debe de indicar la funci&oacute;n y los valores de sus coeficientes (sin incluir el procedimiento) Tranformando An y bn a un dn esto nos queda como</p><pre class="codeinput">clf();
+d0=0.504;
+dn=@(n) (0.504*(2/(1+16*(n.^2))))-(0.504*((8*n)/(1+16*(n.^2))))*j;
+t0=0;
+tf=pi;
+f=@(t) exp(-t/2);
+armo=4;
+a=-7;
+b=7;
+<span class="comment">%Funcion con un armonico de 4</span>
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+<span class="comment">%Funcion con unarmonicod de 15</span>
+armo=15;
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+</pre><img vspace="5" hspace="5" src="Practica5_01.png" alt=""> <img vspace="5" hspace="5" src="Practica5_02.png" alt=""> <h2>Ejemplo 6.2.<a name="7"></a></h2><p>Con serie y espectro exponencial y A=3, no es necesario entregar el c&oacute;digo, solo la aplicaci&oacute;n al problema especifico, debe de indicar la funci&oacute;n y los valores de sus coeficientes (sin incluir el procedimiento)</p><pre class="codeinput">clf();
+d0=0;
+dn=@(n) -(((8/((n.^2)*(pi.^2)))*sin((n*pi)/2))/2)*j;
+t0=-.5;
+tf=1.5;
+f=@(t) (-1/2&lt;t&lt;1/2).*(2*t)+(1/2&lt;t&lt;3/2).*(2*(1-t));
+armo=4;
+a=-7;
+b=7;
+<span class="comment">%Funcion con un armonico de 4</span>
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+<span class="comment">%Funcion con un armonico de 15</span>
+armo=15;
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+</pre><img vspace="5" hspace="5" src="Practica5_03.png" alt=""> <h2>Ejemplo 6.4.<a name="8"></a></h2><pre class="codeinput"><span class="comment">%Con serie y espectro exponencial, no es necesario entregar el c&oacute;digo, solo la aplicaci&oacute;n al problema especifico, debe de indicar la funci&oacute;n y los valores de sus coeficientes (sin incluir el procedimiento)</span>
+clf();
+d0=0.5;
+dn=@(n) (2/(n*pi))*sin((n*pi)/2)-0j;
+t0=-pi/2;
+tf=pi/2;
+f=@(t) heaviside(t);
+armo=4;
+a=-7;
+b=7;
+<span class="comment">%Funcion con un armonico de 4</span>
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+<span class="comment">%Funcion con unarmonicod de 15</span>
+armo=15;
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+</pre><img vspace="5" hspace="5" src="Practica5_04.png" alt=""> <h2>Ejercicio 6.5<a name="9"></a></h2><p>Encontrar la serie exponencial de Fourier y graficar su espectro exponencial de la funcion <img src="Practica5_eq05188318577917321154.png" alt="$|sin(t)|$">.</p><p>Despues de hacer los calculos tenemos los valores del dn y el d0. Realizamos nuestras grafucas para 4 armonicos</p><pre class="codeinput">d0=0.6366;
+dn=@(n) 2/(pi*(1-(4*n^2)));
+t0=0;
+tf=pi;
+f=@(t) abs(sin(t)); <span class="comment">% escribimos nuestra funcion original</span>
+armo=4;
+a=-10;
+b=6.5;
+sfchak(t0,tf,dn,d0,f,armo,a,b)
+</pre><img vspace="5" hspace="5" src="Practica5_05.png" alt=""> <p>Ahora lo hacemos para 15 armonicos</p><pre class="codeinput">d0=0.6366;
+dn=@(n) 2/(pi*(1-(4*n^2)));
+t0=0;
+tf=pi;
+f=@(t) abs(sin(t)); <span class="comment">% escribimos nuestra funcion original</span>
+armo=15;
+a=-10;
+b=6.5;
+sfchak(t0,tf,dn,d0,f,armo,a,b)
+</pre><img vspace="5" hspace="5" src="Practica5_06.png" alt=""> <h2>Ejemplo 6.7<a name="11"></a></h2><p>Con serie y espectro exponencial y <img src="Practica5_eq04356084194358646376.png" alt="$T_0=3$"> sin incluir la gr&aacute;fica de f, error ni energ&iacute;a del error,</p><pre class="codeinput"><span class="comment">%no es necesario entregar el c&oacute;digo, solo la aplicaci&oacute;n al problema especifico,</span>
+<span class="comment">%debe de indicar la funci&oacute;n y los valores de sus coeficientes (sin incluir el procedimiento)</span>
+<span class="comment">% Con 4 arm&oacute;nicos</span>
+ d0=0.504;
+ dn=@(n) 1/3;
+ t0=-4;
+ tf=4;
+ armo=4;
+ a=-5;
+ b=5;
+ sfc1(t0,tf,dn,d0,armo,a,b)
+<span class="comment">%Con 15 arm&oacute;nicos</span>
+armo=15;
+sfc1(t0,tf,dn,d0,armo,a,b)
+</pre><img vspace="5" hspace="5" src="Practica5_07.png" alt=""> <h2>E. 6<a name="12"></a></h2><p>Codigo similiar al C6.2 pero sin funciones inline y para el ejemplo 6.2 realizado anteriormnente</p><pre class="codeinput">x =@(t) mod(t+pi/2,2*pi)&lt;=pi ;
+t = linspace (-2*pi, 2*pi,1000);
+sumterms = zeros(16, length(t));
+sumterms(1,:) = 1/2;
+<span class="keyword">for</span> n = 1:size(sumterms,1)-1;
+sumterms(n+1,:) = 24/(n^2*pi^2)*sin(n*pi/2)*sin(n*t);
+<span class="keyword">end</span>
+sm = cumsum (sumterms); figure(1); clf; ind = 0;
+<span class="keyword">for</span> N = [0,1:2:size(sumterms, 1)-1],
+ind = ind+1; subplot (3,3,ind);
+plot(t,sm, <span class="string">'-'</span>,t,x(t), <span class="string">'k--'</span>);
+axis ([-2*pi 2*pi -4 4]);
+xlabel (<span class="string">'t'</span>);
+ylabel ([<span class="string">'x_{'</span>,num2str(N),<span class="string">'} (t)'</span>]);
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="Practica5_08.png" alt=""> <h2>E. 7<a name="13"></a></h2><pre class="codeinput"><span class="comment">%Aproximacion de D0 a D4 del ejemplo de la pr&aacute;ctica con el c&oacute;digo COMPUTER EXAMPLE C6.4</span>
+T_0 = 3;
+N_0 = 256;
+T = T_0/N_0;
+t = (0:T:T*(N_0-1))';
+M = 15;
+x = exp(-t/2);
+x(1) = 4;
+
+D_n = fft (x)/N_0; n = [-N_0/2:N_0/2-1]';
+clf;
+subplot (2, 2, 1);
+stem(n, abs(fftshift (D_n)),<span class="string">'k'</span>);
+axis ([-M M -.1 .6]);
+xlabel(<span class="string">'n'</span>);
+ylabel(<span class="string">'|D_n|'</span>);
+subplot (2, 2, 2);
+stem(n, angle(fftshift(D_n)),<span class="string">'k'</span>);
+axis([-M M -pi pi]);
+xlabel (<span class="string">'n'</span>);
+ylabel(<span class="string">'\angle D n [rad]'</span>);
+
+n = [0:M]; C_n(1) = abs(D_n(1)); C_n(2:M+1) = 2*abs (D_n(2:M+1));
+theta_n(1) = angle(D_n(1)); theta_n(2:M+1) = angle(D_n(2:M+1));
+subplot (2, 2, 3); stem(n,C_n,<span class="string">'k'</span>);
+xlabel (<span class="string">'n'</span>);
+ylabel(<span class="string">'C_n'</span>);
+subplot (2, 2, 4);
+stem(n,theta_n,<span class="string">'k'</span>);
+xlabel (<span class="string">'n'</span>);
+ylabel(<span class="string">'\theta n [rad]'</span>);
+<span class="comment">%Aproximacion del total de D0 a D4 del ejemplo de la pr&aacute;ctica con el c&oacute;digo implementado</span>
+trapecio(<span class="string">'exp(-x/2)'</span>,-4,4,10)
+</pre><pre class="codeoutput">La aproximacion de la integral es 14.700360</pre><img vspace="5" hspace="5" src="Practica5_09.png" alt=""> <h2>Referencias<a name="14"></a></h2><p>B. P. Lathi, Linear Systems and Signals, Second Edition, Oxford University Press, Inc.,  2005, segunda edicion, pp. 689.</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Práctica 5: Series de Fourier en tiempo continuo
+%% Datos generales:
+% Autores:
+%
+% * Marmolejo Martínez Hamlet 
+%
+% * Jorge Ortiz Velazco Jaime Jonathan
+%
+% * Perez Sanchez Isaac 
+%
+% Grupo: 2TV2 
+%
+% Profesor: Dr. Rafael Martinez Martinez
+%%
+%% Objetivos
+%  * Realizar gráficas de series de Fourier exponenciales y trigonométricas en tiempo continuo
+%  * Manipulación de instrucciones en MATLAB
+%  * Calculo númerico de los coeficientes de Fourier
+%% Introduccion : Series de Fourier en tiempo continuo
+% Como podemos saber, las series de Fourier es la suma de funciones
+% armonicas de manera infinita, que llegaran a formar una funcion periodica
+% o una funcione en cierto intervalo, el proposito de esta practica es
+% mostrar las series de Fourier en tiempo continueo dada una exponencial
+% compleja y observar como le comporta y adecua una serie de Fourier a una
+% funcion $$f(t) dada. Por otro parte, tambien mostraremos el espectro de
+% magnitud, espectro de fase y energia de error de cada serie.
+%% Desarrollo
+%% Ejemplo 6.1
+% Con serie y espectro trigonometrico, no es necesario entregar el código, solo la aplicación al problema especifico, debe de indicar la función y los valores de sus coeficientes (sin incluir el procedimiento)
+% Tranformando An y bn a un dn esto nos queda como
+clf();
+d0=0.504;
+dn=@(n) (0.504*(2/(1+16*(n.^2))))-(0.504*((8*n)/(1+16*(n.^2))))*j;
+t0=0;
+tf=pi;
+f=@(t) exp(-t/2);
+armo=4;
+a=-7;
+b=7;
+%Funcion con un armonico de 4
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+%Funcion con unarmonicod de 15
+armo=15;
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+
+%% Ejemplo 6.2.
+% Con serie y espectro exponencial y A=3, no es necesario entregar el código, solo la aplicación al problema especifico, debe de indicar la función y los valores de sus coeficientes (sin incluir el procedimiento)
+clf();
+d0=0;
+dn=@(n) -(((8/((n.^2)*(pi.^2)))*sin((n*pi)/2))/2)*j;
+t0=-.5;
+tf=1.5;
+f=@(t) (-1/2<t<1/2).*(2*t)+(1/2<t<3/2).*(2*(1-t));
+armo=4;
+a=-7;
+b=7;
+%Funcion con un armonico de 4
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+%Funcion con un armonico de 15
+armo=15;
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+
+%% Ejemplo 6.4.
+%Con serie y espectro exponencial, no es necesario entregar el código, solo la aplicación al problema especifico, debe de indicar la función y los valores de sus coeficientes (sin incluir el procedimiento)
+clf();
+d0=0.5;
+dn=@(n) (2/(n*pi))*sin((n*pi)/2)-0j;
+t0=-pi/2;
+tf=pi/2;
+f=@(t) heaviside(t);
+armo=4;
+a=-7;
+b=7;
+%Funcion con un armonico de 4
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+%Funcion con unarmonicod de 15
+armo=15;
+sfjon(t0,tf,dn,d0,f,armo,a,b)
+%% Ejercicio 6.5
+% Encontrar la serie exponencial de Fourier y graficar su espectro exponencial de la funcion $|sin(t)|$.
+%
+% Despues de hacer los calculos tenemos los valores del dn y el d0.
+% Realizamos nuestras grafucas para 4 armonicos
+d0=0.6366;
+dn=@(n) 2/(pi*(1-(4*n^2)));
+t0=0;
+tf=pi;
+f=@(t) abs(sin(t)); % escribimos nuestra funcion original
+armo=4;
+a=-10;
+b=6.5;
+sfchak(t0,tf,dn,d0,f,armo,a,b)
+%%
+% Ahora lo hacemos para 15 armonicos
+d0=0.6366;
+dn=@(n) 2/(pi*(1-(4*n^2)));
+t0=0;
+tf=pi;
+f=@(t) abs(sin(t)); % escribimos nuestra funcion original
+armo=15;
+a=-10;
+b=6.5;
+sfchak(t0,tf,dn,d0,f,armo,a,b)
+%% Ejemplo 6.7
+% Con serie y espectro exponencial y $T_0=3$ sin incluir la gráfica de f, error ni energía del error, 
+%no es necesario entregar el código, solo la aplicación al problema especifico, 
+%debe de indicar la función y los valores de sus coeficientes (sin incluir el procedimiento)
+% Con 4 armónicos
+ d0=0.504;
+ dn=@(n) 1/3;
+ t0=-4;
+ tf=4;
+ armo=4;
+ a=-5;
+ b=5;
+ sfc1(t0,tf,dn,d0,armo,a,b)
+%Con 15 armónicos
+armo=15;
+sfc1(t0,tf,dn,d0,armo,a,b)
+%% E. 6
+% Codigo similiar al C6.2 pero sin funciones inline y para el ejemplo 6.2
+% realizado anteriormnente
+x =@(t) mod(t+pi/2,2*pi)<=pi ; 
+t = linspace (-2*pi, 2*pi,1000);
+sumterms = zeros(16, length(t)); 
+sumterms(1,:) = 1/2;
+for n = 1:size(sumterms,1)-1;
+sumterms(n+1,:) = 24/(n^2*pi^2)*sin(n*pi/2)*sin(n*t);
+end
+sm = cumsum (sumterms); figure(1); clf; ind = 0;
+for N = [0,1:2:size(sumterms, 1)-1],
+ind = ind+1; subplot (3,3,ind);
+plot(t,sm, '-',t,x(t), 'kREPLACE_WITH_DASH_DASH');
+axis ([-2*pi 2*pi -4 4]);
+xlabel ('t'); 
+ylabel (['x_{',num2str(N),'} (t)']);
+end
+%% E. 7
+%Aproximacion de D0 a D4 del ejemplo de la práctica con el código COMPUTER EXAMPLE C6.4
+T_0 = 3; 
+N_0 = 256; 
+T = T_0/N_0; 
+t = (0:T:T*(N_0-1))'; 
+M = 15;
+x = exp(-t/2); 
+x(1) = 4;
+
+D_n = fft (x)/N_0; n = [-N_0/2:N_0/2-1]';
+clf; 
+subplot (2, 2, 1); 
+stem(n, abs(fftshift (D_n)),'k');
+axis ([-M M -.1 .6]); 
+xlabel('n'); 
+ylabel('|D_n|');
+subplot (2, 2, 2); 
+stem(n, angle(fftshift(D_n)),'k');
+axis([-M M -pi pi]); 
+xlabel ('n'); 
+ylabel('\angle D n [rad]');
+
+n = [0:M]; C_n(1) = abs(D_n(1)); C_n(2:M+1) = 2*abs (D_n(2:M+1));
+theta_n(1) = angle(D_n(1)); theta_n(2:M+1) = angle(D_n(2:M+1));
+subplot (2, 2, 3); stem(n,C_n,'k');
+xlabel ('n'); 
+ylabel('C_n');
+subplot (2, 2, 4);
+stem(n,theta_n,'k');
+xlabel ('n'); 
+ylabel('\theta n [rad]');
+%Aproximacion del total de D0 a D4 del ejemplo de la práctica con el código implementado
+trapecio('exp(-x/2)',-4,4,10)
+%% Referencias
+% B. P. Lathi, Linear Systems and Signals, Second Edition, Oxford
+% University Press, Inc.,  2005, segunda edicion, pp. 689.
+##### SOURCE END #####
+--></body></html>
